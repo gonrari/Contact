@@ -1,3 +1,58 @@
-<p>
-  contact-form works!
-</p>
+<!-- Template driven Form (made by directives) -->
+<!-- Less code -->
+<!-- Straight forward -->
+
+<!-- ngForm => form -->
+<!-- formGroup => inputs fields -->
+<!-- formControl => input field -->
+
+<div class="container">
+    <form #f=ngForm (ngSubmit)="submit(f)"> <!-- By default angular apply ngForm -->
+        <div class="form-group">
+            <label for="firstName" value="firstName">First Name</label>
+            <!-- ngModel add form control to input field, name is required as an ID -->
+            <!-- ngModel + name = instance of formControl object -->
+            <!-- First Name field -->
+            <input ngModel name="firstName"
+                minlength="3"
+                maxlength="7"
+                pattern="\w+"
+                #firstName="ngModel"
+                (change)="log(firstName)"
+                id="firstName"
+                class="form-control"
+                type="text"
+                required/>
+            <div class="alert alert-danger" *ngIf="firstName.touched && !firstName.valid">
+                <div *ngIf="firstName.errors.required">
+                    First Name is required
+                </div>
+                <div *ngIf="firstName.errors.minlength">
+                    First Name should be minum {{firstName.errors.minlength.requiredLength}} characters
+                </div> <!-- {{}} Interpolation -->
+                <div *ngIf="firstName.errors.pattern">
+                    There are special characters, please remove them to continue
+                </div>
+            </div>
+        </div>
+
+        <!-- Date of birth -->
+        <div class="form-group">
+            <label for="datetimepicker">Date of birth:</label>
+             <ng-datepicker ngModel id="datetimepicker" name="form" [options]="options" required></ng-datepicker>
+        </div>
+
+        <!-- Comment field -->
+        <div class="form-group">
+            <label for="comment">Comments:</label>
+            <textarea ngModel name="comment" id="comment" value="comment" cols="30" rows="10" type="text" class="form-control"></textarea>
+        </div>
+
+        <button class="btn btn-primary">Submit</button>
+    </form>
+</div>
+
+<!-- Reactive Form (made by code) -->
+<!-- More control over validation logic -->
+<!-- Good for complex form -->
+<!-- Unit test validation test -->
